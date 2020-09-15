@@ -32,15 +32,21 @@ var sum = function(array) {
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
 
-  let flatArray = [].concat.apply([], array);
-
-  console.log(flatArray);
-
-  if (flatArray.length === 0) {
+  if (array.length === 0) {
     return 0;
   };
 
-  return flatArray[0] + (arraySum(array.slice(1)));
+  let acc = 0;
+
+  array.forEach( (item) => {
+    if (Array.isArray(item)) {
+      acc += arraySum(item);
+    } else {
+      acc += item;
+    }
+  })
+
+  return acc;
 };
 
 // 4. Check if a number is even.
@@ -72,19 +78,27 @@ var sumBelow = function(n) {
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
-  let results = [];
 
-  if (y === x) {
-    return results.slice(1, results.length - 1);
-  } else if (y < x) {
-    results.push(y);
-    range(x, y + 1);
-  } else {
-    results.push(y);
-    range(x, y - 1);
+  if (x === y || x === y - 1) {
+    return [];
   }
-  
+
+  if (x > y) {
+    if (y === x - 2) {
+      return x - 1;
+    } else {
+      return [x - 1].concat(range(x - 1, y));
+    };
+  } else {
+    if (x === y - 2) {
+      return x + 1;
+    } else {
+      return [x + 1].concat(range(x + 1, y))
+    };
+  };
+
 };
+
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
