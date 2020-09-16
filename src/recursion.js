@@ -188,7 +188,7 @@ var modulo = function(x, y) {
     if ((x - y) < 0) {
       return -x;
     } else {
-      return -(modulo(x - y, y));
+      return -modulo(x - y, y);
     }
   } else {
     if ((x - y) < 0) {
@@ -289,15 +289,50 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+
+  if (str1.length !== str2.length) {
+    return false;
+  }
+
+  let equality = (str1[str1.length - 1] === str2[str2.length - 1]);
+
+  if (str1.length === 1) {
+    return equality;
+  } else {
+    return compareStr(str1.slice(1), str2.slice(1))
+  }
+
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
 var createArray = function(str) {
+
+  let results = [];
+
+  results.push(str[0]);
+
+  if (str.length === 1) {
+    return results;
+  } else {
+    return results.concat(createArray(str.slice(1)));
+  }
+
 };
 
 // 17. Reverse the order of an array
 var reverseArr = function(array) {
+
+  let reversed = [];
+
+  reversed.push(array[array.length - 1]);
+
+  if (array.length === 1) {
+    return reversed;
+  } else {
+    return reversed.concat(reverseArr(array.slice(0, array.length - 1)));
+  }
+
 };
 
 // 18. Create a new array with a given value and length.
