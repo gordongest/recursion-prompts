@@ -169,21 +169,34 @@ var palindrome = function(string) {
 // modulo(22,6) // 4
 var modulo = function(x, y) {
 
+  let negX = false;
+  let negY = false;
+
+  if (x < 0) {
+    x = -x;
+    negX = true;
+  }
+
+  if (y < 0) {
+    y = -y;
+  }
 
   if (y === 0) {
     return NaN;
   } else if (x === 0) {
     return 0;
-  } else if (x < 0 && y > 0) {
-    if ((x + y) > 0) {
-      return x
+  } else if (negX) {
+    if ((x - y) < 0) {
+      return -x;
     } else {
-      return modulo(x + y, y);
+      return -(modulo(x - y, y));
     }
-  } else if ((x - y) < 0) {
-    return x;
   } else {
-    return modulo(x - y, y);
+    if ((x - y) < 0) {
+      return x;
+    } else {
+      return modulo(x - y, y);
+    }
   }
 
 };
@@ -229,27 +242,14 @@ var multiply = function(x, y) {
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
 
-  let negX = false;
-  let negY = false;
-
   if (x === 0 || y === 0) {
     return 0;
   }
 
-  if (x < 0) {
-    x = -x;
-    negX = true;
-  }
-
-  if (y < 0) {
-    y = -y;
-    negY = true;
-  }
-
-  if (!negX && !negY || negX && negY) {
-
-  } else if (negX || negY) {
-
+  if (x < y) {
+    return 0;
+  } else {
+    return 1 + divide(x - y, y);
   }
 
 };
