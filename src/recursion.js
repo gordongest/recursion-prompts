@@ -170,7 +170,6 @@ var palindrome = function(string) {
 var modulo = function(x, y) {
 
   let negX = false;
-  let negY = false;
 
   if (x < 0) {
     x = -x;
@@ -242,14 +241,37 @@ var multiply = function(x, y) {
 // Math methods to arrive at an approximate quotient (ignore decimal endings).
 var divide = function(x, y) {
 
-  if (x === 0 || y === 0) {
+  let negX = false;
+  let negY = false;
+
+  if (x < 0) {
+    negX = true;
+    x = -x;
+  }
+
+  if (y < 0) {
+    negY = true;
+    y = -y;
+  }
+
+  if (x === 0 && y === 0) {
+    return NaN;
+  } else if (x === 0 || y === 0) {
     return 0;
   }
 
-  if (x < y) {
-    return 0;
-  } else {
-    return 1 + divide(x - y, y);
+  if (!negX && !negY || negX && negY) {
+    if (x < y) {
+      return 0;
+    } else {
+      return 1 + divide(x - y, y);
+    }
+  } else if (negX || negY) {
+    if (x < y) {
+      return 0;
+    } else {
+      return -1 - divide(x - y, y);
+    }
   }
 
 };
